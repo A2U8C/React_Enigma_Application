@@ -8,6 +8,11 @@ import axios from 'axios';
 import CohortProjects from './CohortProjects.js';
 import CohortProjectLists from './CohortProjectLists.js';
 
+
+const {api_body_info} = require('../cred_details.js');
+
+
+
 function SideBarComponent(prop) {
 
   const [isVisible, setvisibility] = useState(false)
@@ -17,10 +22,9 @@ function SideBarComponent(prop) {
 
   const invokeCollapse = () => {
 
-    axios.post('http://127.0.0.1:5000/cohorts/'+prop.cohortResult.cohortName.value+'/projects',{ 
-      "name" : "Proj ENIGMA3 Cortical GWAS",
-      "endpoint_id" : "https://enigma-endpoint.disk.isi.edu/enigma_dev/sparql"
-  })
+    axios.post('http://127.0.0.1:5000/cohorts/'+prop.cohortResult.cohortName.value+'/projects',
+    api_body_info
+  )
   .then((res)=> {
     // console.log(res.data)
       setResponse(res.data);

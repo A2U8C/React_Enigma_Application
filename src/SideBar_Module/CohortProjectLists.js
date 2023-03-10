@@ -7,6 +7,10 @@ import './CohortProjectLists.css';
 
 
 
+const {api_body_info} = require('../cred_details.js');
+
+
+
 function CohortProjectLists(cohortListsProj) {
 
     const [state, setstate] = useState({projName:null,cohortName:null})

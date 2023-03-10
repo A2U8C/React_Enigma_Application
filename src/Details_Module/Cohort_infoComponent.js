@@ -3,6 +3,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 
+
+const {api_body_info} = require('../cred_details.js');
+
+
+
 function Cohort_infoComponent(props) {
     // {Cohort_info,project_info}
 
@@ -17,10 +22,9 @@ function Cohort_infoComponent(props) {
         //     console.log(Object.keys(props.cohortInfoReq).length)
         if (props.cohortInfoReq!=undefined && props.projectInfoReq!=undefined){
             console.log('http://127.0.0.1:5000/cohorts/'+props.cohortInfoReq.replace(" ","_")+'/projects/'+props.projectInfoReq.replace(" ","_"))
-            axios.post('http://127.0.0.1:5000/cohorts/'+props.cohortInfoReq.replace(" ","_")+'/projects/'+props.projectInfoReq.replace(" ","_"),{ 
-        "name" : "Proj ENIGMA3 Cortical GWAS",
-        "endpoint_id" : "https://enigma-endpoint.disk.isi.edu/enigma_dev/sparql"
-    })
+            axios.post('http://127.0.0.1:5000/cohorts/'+props.cohortInfoReq.replace(" ","_")+'/projects/'+props.projectInfoReq.replace(" ","_"),
+            api_body_info
+    )
       .then((res)=> {
           setResponse(res.data);
         });

@@ -8,6 +8,13 @@ import axios from 'axios';
 import { useEffect, useState, useCallback } from 'react';
 import { Container,Row,Col } from 'react-bootstrap';
 
+
+
+
+const {api_body_info} = require('./cred_details.js');
+
+
+
 function App() {
 
   const [response, setResponse] = useState([])
@@ -24,10 +31,9 @@ function App() {
 
 
   useEffect(()=> {
-    axios.post('http://127.0.0.1:5000/cohorts',{ 
-      "name" : "Proj ENIGMA3 Cortical GWAS",
-      "endpoint_id" : "https://enigma-endpoint.disk.isi.edu/enigma_dev/sparql"
-  })
+    axios.post('http://127.0.0.1:5000/cohorts',
+    api_body_info
+  )
     .then((res)=> {
       // console.log(res.data)
         setResponse(res.data);

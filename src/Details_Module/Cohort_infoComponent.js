@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import Card from 'react-bootstrap/Card';
 
 
 const {api_body_info} = require('../cred_details.js');
@@ -34,10 +35,10 @@ function Cohort_infoComponent(props) {
       
     },[props.cohortInfoReq,props.projectInfoReq]);
 
-    if (!props.cohortInfoReq || !props.projectInfoReq){
-        console.log("Return ")
-        return
-    }
+    // if (!props.cohortInfoReq || !props.projectInfoReq){
+    //     console.log("Return ")
+    //     return
+    // }
     
         // alert(response)
          console.log(response)
@@ -45,23 +46,40 @@ function Cohort_infoComponent(props) {
     var data=JSON.parse(JSON.stringify(response))
 
     console.log(data)
-    return (
-        <div>
-            <h1>{props.projectInfoReq}</h1>
-            <Table striped bordered hover>
-                <tbody>
-                    {data.map(e => 
-                    <tr>
-                    <td>{e.props.value}</td>
-                    <td>{e.propsURI.value}</td>
-                    </tr>
-                    )}
-                    
-                </tbody>
-            </Table>
 
-        </div>
-      );
+
+    if(data.length>0){
+        return (
+            <div>
+                <h1>{props.projectInfoReq}</h1>
+                <Table striped bordered hover>
+                    <tbody>
+                        {data.map(e => 
+                        <tr>
+                        <td>{e.props.value}</td>
+                        <td>{e.propsURI.value}</td>
+                        </tr>
+                        )}
+                        
+                    </tbody>
+                </Table>
+    
+            </div>
+          );
+    }
+    else{
+        return (
+            <div>
+                <h1>{props.projectInfoReq}</h1>
+                <Card>
+                <Card.Body>No data available</Card.Body>
+                </Card>
+            </div>
+          );
+    }
+
+
+    
 }
 
 

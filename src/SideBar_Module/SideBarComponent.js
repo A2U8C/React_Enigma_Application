@@ -24,7 +24,7 @@ function SideBarComponent(prop) {
 
   const invokeCollapse = () => {
 
-    axios.post('http://127.0.0.1:5000/cohorts/'+prop.cohortResult.cohortName.value+'/projects',
+    axios.post('http://127.0.0.1:5000/cohorts/'+prop.cohortResult+'/projects',
     api_body_info
   )
   .then((res)=> {
@@ -59,13 +59,26 @@ function SideBarComponent(prop) {
     //     );
 
 
-    return (
+
+    if(prop.missing_val_param){
+  return (
+  <div className="CohortProjList_class_new disabled">
+        <Accordion.Item eventKey={prop.keyval} >
+        <Accordion.Header onClick={invokeCollapse}>{prop.cohortResult}</Accordion.Header>
+        
+        </Accordion.Item>
+
+
+        </div>)
+    }
+    else{
+      return (
       <div className="CohortProjList_class_new">
 
       <Accordion.Item eventKey={prop.keyval}>
-      <Accordion.Header onClick={invokeCollapse}>{prop.cohortResult.cohortName.value}</Accordion.Header>
+      <Accordion.Header onClick={invokeCollapse}>{prop.cohortResult}</Accordion.Header>
       <Accordion.Body>
-      {response.length>0 ? response.map((cohort_projects) => (<CohortProjectLists key={prop.cohortResult.cohortName.value} projectsList={cohort_projects} projectName={prop.cohortResult.cohortName.value} cohortInfoUpdate={prop.cohortInfoUpdate}/>)) : "No cohort projects"}
+      {response.length>0 ? response.map((cohort_projects) => (<CohortProjectLists key={prop.cohortResult} projectsList={cohort_projects} projectName={prop.cohortResult} cohortInfoUpdate={prop.cohortInfoUpdate}/>)) : "No cohort projects"}
         
       </Accordion.Body>
     </Accordion.Item>
@@ -73,6 +86,9 @@ function SideBarComponent(prop) {
 
       </div>
     );
+    }
+
+    
 
 
 

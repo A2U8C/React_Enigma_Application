@@ -57,7 +57,7 @@ function Covariate_SideBarComponent(prop) {
     //     );
 
 
-
+var temp_name= prop.covariateName.length>20?prop.covariateName.slice(0,20)+"...":prop.covariateName
 
 
 
@@ -65,7 +65,7 @@ function Covariate_SideBarComponent(prop) {
           <div className="CohortProjList_class_new">
 
           <Accordion.Item eventKey={prop.keyval}>
-          <Accordion.Header onClick={invokeCollapse}>{prop.covariateName}</Accordion.Header>
+          <Accordion.Header onClick={invokeCollapse}>{temp_name}</Accordion.Header>
           <Accordion.Body>
           {response.length>0 ? response.map((covariate_property,idx) => (<CovariateProjectLists key={idx} covariateList={covariate_property} covariateName={prop.covariateResult} covariateInfoUpdate={prop.covariateInfoUpdate}/>)) : null}
         

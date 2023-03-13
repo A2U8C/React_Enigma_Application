@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import MuiDrawer from "@mui/material/Drawer";
 import styled from "@emotion/styled";
 import {
   Box,
   Collapse,
-  Divider,
   List,
-  ListItem,
   ListItemButton,
   ListItemText,
   ListSubheader,
+  Tooltip,
 } from "@mui/material";
 
 // Icons
@@ -19,81 +18,57 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 
 const drawerWidth = "240px";
 const Drawer = styled(MuiDrawer)({
-  //   ":root": {
-  //     paper: {
-  //       backgroundColor: "red",
-  //     },
-  //   },
+  // "& .MuiDrawer-paper": {
+  //   backgroundColor: "#312F44",
+  //   color: "#fff",
+  // },
 });
 
-const cohortListData = [
-  "CHRISTCHURCH",
-  "ROME",
-  "ARMENIA",
-  "VUMC2",
-  "SHANGHAI",
-  "UPENN",
-  "STANFORD",
-  "STELLENBOSCH",
-  "AMSTERDAM",
-  "BERN",
+const unAvailCohorts = [
   "CAMPINAS",
-  "GRAZ",
+  "COGTIPS",
   "NW-ENGLAND",
   "NZPD",
   "OXFORD",
   "PPMI",
   "RADBOUD",
   "TAIWAN",
+  "UCKK",
   "UCSF",
-  "UKBB",
   "UVA",
-  "COGTIPS",
-  "BRISBANE",
-  "CHARLOTTESVILLE",
-  "DONDERS",
-  "LIEGE",
-  "MILAN",
-  "NEUROCON",
-  "ONJAPAN",
-  "TAO WU",
-  "UDAL",
 ];
 
-const unAvailCohorts = [
-  "COGTIPS",
-  "BRISBANE",
-  "CHARLOTTESVILLE",
-  "DONDERS",
-  "LIEGE",
-  "MILAN",
-  "NEUROCON",
-  "ONJAPAN",
-  "TAO WU",
-  "UDAL",
-];
-// const renderRow = ()=>{
-//     return(
-//         <ListItem key={index}>
-//         <ListItemButton onClick={handleClick}>
-//           <ListItemText primary={text} />
-//           {open ? <ExpandLess /> : <ExpandMore />}
-//           <Collapse>
-//           </Collapse>
-//         </ListItemButton>
-//       </ListItem>
-//     )
-// }
-
-export default function CohortsList() {
-  const [availOpen, setAvailOpen] = useState(true);
+export default function CohortsList(props) {
+  const [availOpen, setAvailOpen] = useState(false);
   const [unavailOpen, setUnavailOpen] = useState(false);
-  const handleAvailClick = (text, id) => {
-    // Do something
-  };
 
-  const handelUnavailClick = (text, id) => {
-    /// do something
+  const [cohortAllList, setcohortAllList] = useState([]);
+  const [cohortMissingList, setCohortMissingList] = useState([]);
+  const [childCohortName, setChildCohortName] = useState("");
+  const [selected, setSelected] = useState("");
+
+  useEffect(
+    (cohortnameSetter = props.cohortnameSetter) => {
+      cohortnameSetter(childCohortName);
+    },
+    [props.cohortnameSetter, childCohortName]
+  );
+
+  // Get List of Cohorts
+  useEffect(() => {
+    var api_body_info = {
+      name: "PD WG",
+      endpoint_id: "https://endpoint.linkedearth.isi.edu/enigma_pd/query",
+      projType: "WorkingGroup (E)",
+    };
+    axios.post("http://127.0.0.1:5000/cohorts", api_body_info).then((res) => {
+      setcohortAllList(res.data.presentCohorts);
+      setCohortMissingList(res.data.Missing);
+    });
+  }, []);
+
+  const handleAvailClick = (text, id) => {
+    setChildCohortName(text);
   };
 
   return (
@@ -135,16 +110,24 @@ export default function CohortsList() {
         </ListItemButton>
 
         <Collapse in={availOpen} timeout="auto" unmountOnExit>
-          {cohortListData.map((text, index) => (
-            <Box key={index + "_" + text}>
-              <ListItemButton
-                onClick={() => {
-                  handleAvailClick(text, index);
-                }}
-              >
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </Box>
+          {cohortAllList.map((text, index) => (
+            <Tooltip title={text} enterDelay={700} arrow>
+              <Box key={index + "_" + text}>
+                <ListItemButton
+                  onClick={() => {
+                    handleAvailClick(text, index);
+                    setSelected(text);
+                  }}
+                  selected={selected === text}
+                >
+                  <ListItemText
+                    primary={
+                      text.length > 15 ? text.slice(0, 15) + "..." : text
+                    }
+                  />
+                </ListItemButton>
+              </Box>
+            </Tooltip>
           ))}
         </Collapse>
 
@@ -160,12 +143,18 @@ export default function CohortsList() {
         </ListItemButton>
 
         <Collapse in={unavailOpen} timeout="auto" unmountOnExit>
-          {unAvailCohorts.map((text, index) => (
-            <Box key={index + "_" + text}>
-              <ListItemButton onClick={handelUnavailClick(text, index)}>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </Box>
+          {cohortMissingList.map((text, index) => (
+            <Tooltip title={text} enterDelay={700} arrow>
+              <Box key={index + "_" + text}>
+                <ListItemButton disabled>
+                  <ListItemText
+                    primary={
+                      text.length > 15 ? text.slice(0, 15) + "..." : text
+                    }
+                  />
+                </ListItemButton>
+              </Box>
+            </Tooltip>
           ))}
         </Collapse>
       </List>

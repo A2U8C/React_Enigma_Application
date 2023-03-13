@@ -1,0 +1,31 @@
+.SideBarComponent{
+    width: 100%;
+}
+
+
+.collapsible .content {
+    padding: 1%;
+    background-color: #eeeeee;
+}
+.collapsible .header {
+    background-color: #dddddd;
+    padding: 1%;
+    cursor: pointer;
+}
+
+
+.CohortProjList_class{
+    margin-bottom: 3%;
+    padding-left: 5%;
+}
+
+.CohortProjList_class_head{
+    font-size: 1rem;
+}
+
+.CohortProjList_class_new{
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-bottom: 2%;
+
+}

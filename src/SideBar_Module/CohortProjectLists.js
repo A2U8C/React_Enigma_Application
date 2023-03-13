@@ -25,6 +25,7 @@ function CohortProjectLists(cohortListsProj) {
 
     return (
         <div className="cohortSubProjList_class" onClick={changeState}>
+            
             <span>&rarr;</span> {cohortListsProj.projectsList.cohortProjName.value}
 
 

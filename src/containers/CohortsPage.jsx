@@ -11,27 +11,6 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import CohortsList from "../components/CohortsList";
 import emptyStateImg from "../Static/Empty_State.gif";
-// const cohortData = {
-//   "HasCohortGroup (E)": [
-//     "CHRISTCHURCH grp HC",
-//     "CHRISTCHURCH grp PD",
-//     "CHRISTCHURCH grp CN",
-//   ],
-//   "HasCohortProject (E)": [
-//     "CHRISTCHURCH proj FS",
-//     "CHRISTCHURCH proj FS grp HC",
-//     "CHRISTCHURCH proj FS grp PD",
-//   ],
-
-//   "HasPersonRole MainPrincipalInvestigator (E)": "Tracy Melzer",
-//   "HasSpecies (E)": "human",
-//   "Has PD Demographics (E)": "CHRISTCHURCH PDDemographics",
-//   "Has cardiovascular (E)": "CHRISTCHURCH cardio cov",
-//   "Has cognitive (E)": "CHRISTCHURCH cog cov",
-//   "Has neuropsychiatric (E)": "CHRISTCHURCH neuro cov",
-//   "IsPartOfProject (E)": "PD proj FS",
-//   "  IsPartOfWorkingGroup (E)": "PD WG",
-// };
 
 function CohortsPage() {
   const [cohortName, setCohortName] = useState("");
@@ -138,7 +117,7 @@ function CohortsPage() {
             textAlign: "center",
           }}
         >
-          {/* <img src={emptyStateImg} /> */}
+          <img src={emptyStateImg} alt="" />
           <Typography component="div" variant="h6">
             Please Select a Cohort to Begin
           </Typography>

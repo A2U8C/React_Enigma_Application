@@ -1,170 +1,59 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import MuiDrawer from "@mui/material/Drawer";
 import styled from "@emotion/styled";
-import axios from 'axios';
-
-
-
-
 import {
   Box,
   Collapse,
-  Divider,
   List,
-  ListItem,
   ListItemButton,
   ListItemText,
   ListSubheader,
+  Tooltip,
 } from "@mui/material";
 
 // Icons
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 
-const drawerWidth = "240px";
-const Drawer = styled(MuiDrawer)({
-  //   ":root": {
-  //     paper: {
-  //       backgroundColor: "red",
-  //     },
-  //   },
-});
-
-
-
 const {api_body_info} = require('../cred_details.js');
 
 
-const cohortListData = [
-  "CHRISTCHURCH",
-  "ROME",
-  "ARMENIA",
-  "VUMC2",
-  "SHANGHAI",
-  "UPENN",
-  "STANFORD",
-  "STELLENBOSCH",
-  "AMSTERDAM",
-  "BERN",
-  "CAMPINAS",
-  "GRAZ",
-  "NW-ENGLAND",
-  "NZPD",
-  "OXFORD",
-  "PPMI",
-  "RADBOUD",
-  "TAIWAN",
-  "UCSF",
-  "UKBB",
-  "UVA"
-  // "COGTIPS",
-  // "BRISBANE",
-  // "CHARLOTTESVILLE",
-  // "DONDERS",
-  // "LIEGE",
-  // "MILAN",
-  // "NEUROCON",
-  // "ONJAPAN",
-  // "TAO WU",
-  // "UDAL",
-];
+const drawerWidth = "240px";
+const Drawer = styled(MuiDrawer)({
+  // "& .MuiDrawer-paper": {
+  //   backgroundColor: "#312F44",
+  //   color: "#fff",
+  // },
+});
 
-const unAvailCohorts = [
-  "COGTIPS",
-  "BRISBANE",
-  "CHARLOTTESVILLE",
-  "DONDERS",
-  "LIEGE",
-  "MILAN",
-  "NEUROCON",
-  "ONJAPAN",
-  "TAO WU",
-  "UDAL",
-];
-// const renderRow = ()=>{
-//     return(
-//         <ListItem key={index}>
-//         <ListItemButton onClick={handleClick}>
-//           <ListItemText primary={text} />
-//           {open ? <ExpandLess /> : <ExpandMore />}
-//           <Collapse>
-//           </Collapse>
-//         </ListItemButton>
-//       </ListItem>
-//     )
-// }
-
-export default function CohortsList() {
-  const [availOpen, setAvailOpen] = useState(true);
+export default function CohortsList(props) {
+  const [availOpen, setAvailOpen] = useState(false);
   const [unavailOpen, setUnavailOpen] = useState(false);
 
+  const [cohortAllList, setcohortAllList] = useState([]);
+  const [cohortMissingList, setCohortMissingList] = useState([]);
+  const [childCohortName, setChildCohortName] = useState("");
+  const [selected, setSelected] = useState("");
 
-  const [cohortProjOpen, setcohortProjOpen] = useState(false)
-  const [cohortProjList, setcohortProjList] = useState([])
-
-
-  const handleAvailClick = (text, id) => {
-    // Do something
-  };
-
-  const handelUnavailClick = (text, id) => {
-    /// do something
-  };
-
-
-
-  const invokeCollapse = (text) => {
-
-    // console.log(text)
-    axios.post('http://127.0.0.1:5000/cohorts/'+text+'/projects',
-    api_body_info
-  )
-  .then((res)=> {
-    // console.log(res.data)
-      setcohortProjList(res.data);
-      setcohortProjOpen(!cohortProjOpen)
-    });
-
-    // return cohortProjOpen
-  }
-
-
-
-
-
-  const [cohortAllList, setcohortAllList] = useState([])
-  const [cohortInfoResp, setcohortInfoResp] = useState(null)
-
-  const cohortInfoUpdate = useCallback(
-    (InfoResp) => {
-      setcohortInfoResp(InfoResp)
+  useEffect(
+    (cohortnameSetter = props.cohortnameSetter) => {
+      cohortnameSetter(childCohortName);
     },
-    [cohortInfoResp],
+    [props.cohortnameSetter, childCohortName]
   );
 
-  useEffect(()=> {
-    axios.post('http://127.0.0.1:5000/cohorts',
-    api_body_info
-  )
-    .then((res)=> {
-      // console.log(res.data)
-      setcohortAllList(res.data);
-      });
-  },[]);
+  // Get List of Cohorts
+  useEffect(() => {
+    axios.post("http://127.0.0.1:5000/cohorts", api_body_info).then((res) => {
+      setcohortAllList(res.data.presentCohorts);
+      setCohortMissingList(res.data.Missing);
+    });
+  }, []);
 
-
-  var cohortAvailList=[]
-  var cohortMissingList=[]
-
-  if (Object.keys(cohortAllList).length>0){
-    cohortAvailList=cohortAllList.presentCohorts
-    cohortMissingList=cohortAllList.Missing
-    }
-
-  console.log(cohortAvailList)
-
-
-
+  const handleAvailClick = (text, id) => {
+    setChildCohortName(text);
+  };
 
   return (
     <Drawer
@@ -205,25 +94,25 @@ export default function CohortsList() {
         </ListItemButton>
 
         <Collapse in={availOpen} timeout="auto" unmountOnExit>
-
-
-          {cohortAvailList.map((text, index) => (
-            <Box key={index + "_" + text}>
-              <ListItemButton
-                onClick={() => {
-                  // handleAvailClick(text, index);
-                  invokeCollapse(text)
-                }}
-              >
-                <ListItemText primary={text} />
-
-              </ListItemButton>
-            </Box>
+          {cohortAllList.map((text, index) => (
+            <Tooltip title={text} enterDelay={700} arrow>
+              <Box key={index + "_" + text}>
+                <ListItemButton
+                  onClick={() => {
+                    handleAvailClick(text, index);
+                    setSelected(text);
+                  }}
+                  selected={selected === text}
+                >
+                  <ListItemText
+                    primary={
+                      text.length > 15 ? text.slice(0, 15) + "..." : text
+                    }
+                  />
+                </ListItemButton>
+              </Box>
+            </Tooltip>
           ))}
-
-
-
-
         </Collapse>
 
         {/* Unavialable Cohorts  */}
@@ -239,11 +128,17 @@ export default function CohortsList() {
 
         <Collapse in={unavailOpen} timeout="auto" unmountOnExit>
           {cohortMissingList.map((text, index) => (
-            <Box key={index + "_" + text}>
-              <ListItemButton onClick={handelUnavailClick(text, index)}>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </Box>
+            <Tooltip title={text} enterDelay={700} arrow>
+              <Box key={index + "_" + text}>
+                <ListItemButton disabled>
+                  <ListItemText
+                    primary={
+                      text.length > 15 ? text.slice(0, 15) + "..." : text
+                    }
+                  />
+                </ListItemButton>
+              </Box>
+            </Tooltip>
           ))}
         </Collapse>
       </List>

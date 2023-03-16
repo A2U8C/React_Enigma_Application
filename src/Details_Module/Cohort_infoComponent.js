@@ -35,29 +35,23 @@ function Cohort_infoComponent(props) {
       
     },[props.cohortInfoReq,props.projectInfoReq]);
 
-    // if (!props.cohortInfoReq || !props.projectInfoReq){
-    //     console.log("Return ")
-    //     return
-    // }
-    
-        // alert(response)
-         console.log(response)
-        //  
+
     var data=JSON.parse(JSON.stringify(response))
+    var all_keys=Object.keys(data)
 
-    console.log(data)
+    console.log(data,Object.keys(data).length)
 
 
-    if(data.length>0){
+    if(data,Object.keys(data).length>0){
         return (
             <div>
                 <h1>{props.projectInfoReq}</h1>
                 <Table striped bordered hover>
                     <tbody>
-                        {data.map(e => 
+                        {all_keys.map(e => 
                         <tr>
-                        <td>{e.props.value}</td>
-                        <td>{e.propsURI.value}</td>
+                        <td>{e}</td>
+                        <td>{data[e]}</td>
                         </tr>
                         )}
                         

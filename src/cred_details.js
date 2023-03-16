@@ -13,4 +13,10 @@ const api_body_info={
     "projType":"WorkingGroup (E)"
 }
 
+// const api_body_info={
+//     "name" : "Proj ENIGMA3 Cortical GWAS",
+//     "endpoint_id" : "https://enigma-endpoint.disk.isi.edu/enigma_dev/sparql",
+//     "projType":"Project (E)"
+// }
+
 module.exports = {api_body_info};

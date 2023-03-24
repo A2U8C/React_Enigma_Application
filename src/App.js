@@ -23,11 +23,13 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PsychologyAltIcon from "@mui/icons-material/PsychologyAlt";
 import FeedIcon from '@mui/icons-material/Feed';
+import DifferenceIcon from '@mui/icons-material/Difference';
 
 import CovPage from "./containers/CovPage";
 import ProjectsPage from "./containers/ProjectsPage";
 import CohortsPage from "./containers/CohortsPage";
 import CohortProjDetails from "./containers/CohortProjDetails";
+import CovCohortsIntersection from "./containers/CovCohortsIntersection";
 import './App.css';
 
 const drawerWidth = 240;
@@ -127,6 +129,10 @@ export default function App() {
     {
       name: "CohortDetails",
       icon: <FeedIcon fontSize="large" />,
+    },
+    {
+      name: "FindCohortCovariates",
+      icon: <DifferenceIcon fontSize="large" />,
     }
   ];
 
@@ -238,6 +244,7 @@ export default function App() {
           <Route path="/Cohorts" Component={CohortsPage} />
           <Route path="/Covarients" Component={CovPage} />
           <Route path="/CohortDetails" Component={CohortProjDetails} />
+          <Route path="/FindCohortCovariates" Component={CovCohortsIntersection} />
         </Routes>
       </Box>
     </Box>

@@ -30,9 +30,8 @@ function Covariate_infoComponent(props) {
           setResponse(res.data);
         });
 
-        }
-
-      
+        } 
+        
     },[props.covariateInfoReq,props.covariateListInfoReq]);
 
     if (!props.covariateInfoReq || !props.covariateListInfoReq){

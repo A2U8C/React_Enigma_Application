@@ -16,6 +16,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { Routes, Route, Link } from "react-router-dom";
 // Icons
 import brain from './brain.svg';
+import lobes from './lobes.svg';
+
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -169,11 +171,11 @@ export default function App() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6"  component="div">
-            <div className="d-flex justify-content-between">
-            {proj}
+            <div className="d-flex justify-content-between align-middle header_func">
+              {proj}
 
             <div className="text-center">
-<img src={brain} className="App-logo" alt="brain" />
+<img src={lobes} className="App-logo" alt="brain" />
             </div>
             
             </div>

@@ -30,66 +30,6 @@ import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 const {api_body_info} = require('../cred_details.js');
 
 
-// function CovPage() {
-
-//   const [response, setResponse] = useState([])
-//   const [cavariateInfoResp, setcovariateInfoResp] = useState(null)
-//   const covariateInfoUpdate = useCallback(
-//     (covariateInfoResp) => {
-//       setcovariateInfoResp(covariateInfoResp)
-//     },
-//     [cavariateInfoResp],
-//   );
-
-//   useEffect(()=> {
-//     axios.post('http://127.0.0.1:5000/allcovariates',
-//     api_body_info
-//   )
-//     .then((res)=> {
-//       // console.log(res.data)
-//         setResponse(res.data);
-//       });
-//   },[]);
-
-
-
-
-
-//   return (
-// <div className="App">
-//          <Row>
-//         <Col sm={3}>
-//                     <header>
-//                               {/* <div className="text-center">
-//                                   <img src={brain} className="App-logo" alt="brain" />
-//                               </div> */}
-
-//                               <Accordion defaultActiveKey={['0']} alwaysOpen className="text-center">
-//                             {
-//                               Object.keys(response).length>0 ? Object.keys(response).map((result_cohorts,idx) => (<Covariate_SideBarComponent key={idx} keyval={idx} covariateName={result_cohorts} covariateResult={response[result_cohorts]} covariateInfoUpdate={covariateInfoUpdate}/>)) : null
-//                             }
-//                               </Accordion>          
-//                     </header>
-//             </Col>
-//         <Col sm={9} className="mr-auto ml-auto text-center">
-//         {
-//                 cavariateInfoResp && 
-//                 <Covariate_infoComponent covariateInfoReq={cavariateInfoResp.covName} covariateListInfoReq={cavariateInfoResp.covList}/>
-//         }
-//         </Col>
-// </Row>
-
-
-
-//           </div>
-
-//   );
-
-
-// }
-
-
-
 
 
 function CovPage() {

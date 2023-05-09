@@ -3,10 +3,11 @@
 }
 
 .App-logo {
-  height: 5vmin;
+  height: calc(10px + 6.5vmin);/* 5vmin; */
   pointer-events: none;
   margin-bottom: 10%;
   margin-left: 15%;
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -15,12 +16,20 @@
   }
 }
 
+.header_func{
+  
+  align-items: center;
+  align-content: center;
+}
+
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-content: center;
+  align-self: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;

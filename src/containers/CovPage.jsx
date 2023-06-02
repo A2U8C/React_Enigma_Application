@@ -16,6 +16,7 @@ import { Row,Col } from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 
 
+import emptyStateImg from "../static/Empty_State.gif";
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -40,7 +41,7 @@ function CovPage() {
   
     useEffect(() => {
       if(response.covName!=undefined && response.covList!=undefined ){
-        axios.post('http://127.0.0.1:5000/covariate/'+response.covList+'/covarProp/'+response.covName,
+        axios.post(api_body_info['backEndURL']+'covariate/'+response.covList+'/covarProp/'+response.covName,
           api_body_info
         )
         .then((res) => {
@@ -133,7 +134,20 @@ function CovPage() {
           ))} */}
         </TableBody>
       </Table>
-    </TableContainer>):null}
+    </TableContainer>):(
+        <Box
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            textAlign: "center",
+          }}
+        >
+          <img src={emptyStateImg} />
+          <Typography component="div" variant="h6">
+            Please Select a Covariate to Begin
+          </Typography>
+        </Box>
+      )}
         
         
 

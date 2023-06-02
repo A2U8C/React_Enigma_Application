@@ -1,0 +1,7 @@
+.modal.fade {
+  z-index: 1300 !important;
+}
+
+.Modal_in_Modal {
+  z-index: 1500 !important;
+}

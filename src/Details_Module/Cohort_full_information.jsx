@@ -22,8 +22,8 @@ function Cohort_full_information(props) {
         // if (Object.keys(props.cohortInfoReq).length>0 && Object.keys(props.projectInfoReq).length>0){
         //     console.log(Object.keys(props.cohortInfoReq).length)
         if (props.cohortNameInfo!=undefined){
-            console.log('http://127.0.0.1:5000/cohorts/'+props.cohortNameInfo.replace(" ","_")+'/details')
-            axios.post('http://127.0.0.1:5000/cohorts/'+props.cohortNameInfo.replace(" ","_")+'/details',
+            console.log(api_body_info['backEndURL']+'cohorts/'+props.cohortNameInfo.replace(" ","_")+'/details')
+            axios.post(api_body_info['backEndURL']+'cohorts/'+props.cohortNameInfo.replace(" ","_")+'/details',
             api_body_info
     )
       .then((res)=> {

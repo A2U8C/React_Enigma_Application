@@ -28,7 +28,7 @@ function CohortProjDetails() {
   );
 
   useEffect(()=> {
-    axios.post('http://127.0.0.1:5000/cohorts',
+    axios.post(api_body_info['backEndURL']+'cohorts',
     api_body_info
   )
     .then((res)=> {

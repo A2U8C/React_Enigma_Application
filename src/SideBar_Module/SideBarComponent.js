@@ -24,7 +24,7 @@ function SideBarComponent(prop) {
 
   const invokeCollapse = () => {
 
-    axios.post('http://127.0.0.1:5000/cohorts/'+prop.cohortResult+'/projects',
+    axios.post(api_body_info['backEndURL']+'cohorts/'+prop.cohortResult+'/projects',
     api_body_info
   )
   .then((res)=> {

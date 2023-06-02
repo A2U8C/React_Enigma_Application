@@ -59,21 +59,21 @@ export default function CovariateIntersectionList(props) {
   
     // Get List of Cohorts
     useEffect(() => {
-      axios.post("http://127.0.0.1:5000/covariate/Has_PD_Demographics_(E)", api_body_info).then((res) => {
+      axios.post(api_body_info['backEndURL']+"covariate/Has_PD_Demographics_(E)", api_body_info).then((res) => {
         // console.log(res)
         setDemoAllList(res.data);
       });
     }, []);
 
     useEffect(() => {
-        axios.post("http://127.0.0.1:5000/covariate/Has_cognitive_(E)", api_body_info).then((res) => {
+        axios.post(api_body_info['backEndURL']+"covariate/Has_cognitive_(E)", api_body_info).then((res) => {
           // console.log(res)
           setcognitiveAllList(res.data);
         });
       }, []);
 
       useEffect(() => {
-        axios.post("http://127.0.0.1:5000/covariate/Has_neuropsychiatric_(E)", api_body_info).then((res) => {
+        axios.post(api_body_info['backEndURL']+"covariate/Has_neuropsychiatric_(E)", api_body_info).then((res) => {
           // console.log(res)
           setNeuroAllList(res.data);
         });

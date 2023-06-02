@@ -7,10 +7,14 @@
 // Covariate_SideBar
 
 
+//http://10.20.0.124:5000/
+
+
 const api_body_info={
     "name" : "PD WG",
     "endpoint_id" : "https://endpoint.linkedearth.isi.edu/enigma_pd/query",
-    "projType":"WorkingGroup (E)"
+    "projType":"WorkingGroup (E)",
+    "backEndURL":"http://127.0.0.1:5000/"
 }
 
 // const api_body_info={

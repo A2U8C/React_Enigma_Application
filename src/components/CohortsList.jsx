@@ -45,7 +45,7 @@ export default function CohortsList(props) {
 
   // Get List of Cohorts
   useEffect(() => {
-    axios.post("http://127.0.0.1:5000/cohorts", api_body_info).then((res) => {
+    axios.post(api_body_info['backEndURL']+"cohorts", api_body_info).then((res) => {
       setcohortAllList(res.data.presentCohorts);
       setCohortMissingList(res.data.Missing);
     });

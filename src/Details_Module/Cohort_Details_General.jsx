@@ -34,7 +34,7 @@ function Cohort_Details_General(prop){
     if(prop.missing_val_param){
   return (
   <div className="CohortProjList_class_new no_arrow_class disabled">
-        <Accordion.Item className="no_arrow_class" eventKey={prop.keyval} >
+        <Accordion.Item className="no_arrow_class" eventKey={prop.keyval}>
         <Accordion.Header>{prop.cohortResult}</Accordion.Header>
         
         </Accordion.Item>

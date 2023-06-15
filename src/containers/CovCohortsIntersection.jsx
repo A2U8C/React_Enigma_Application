@@ -36,7 +36,8 @@ function CovCohortsIntersection() {
         .then((res) => {
 
           setcovariateInfoResp(res.data);
-          // cohortData.name_val=cohortData.name_val.replaceAll("!@#$!@#","\n");
+          cohortData.name_val=cohortData.name_val.replaceAll("!@#$!@#","\n");
+          console.log(res.data)
           prev=response;
         });
       
@@ -76,15 +77,17 @@ function CovCohortsIntersection() {
 
       {response.length>2? 
       <div>
-        {/* <Card>
+        <Card>
       <Card.Body><Typography component="div">
         Covariates selected:
         <br/>
+        {console.log(cohortData)}
         {cohortData!=undefined && cohortData.name_val!=undefined && cohortData.name_val.split('!@#$!@#').map((line,ind)=>(
+          
           <span>{line}<br/></span>
         ))}
           </Typography></Card.Body>
-      </Card> */}
+      </Card>
         
         
         <Table aria-label="simple table">
@@ -102,7 +105,9 @@ function CovCohortsIntersection() {
           </TableRow>
         </TableHead>
         <TableBody>
-        {Object.keys(cohortData).length>0 && cohortData.all_data_cohorts.length>0?(cohortData.all_data_cohorts.map((elem) => (
+          {console.log(cohortData)}
+          {cohortData!=undefined && Object.keys(cohortData).length>0 && 
+          cohortData.all_present.length>0?(cohortData.all_present.map((elem) => (
             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
             <TableCell component="th" scope="row" align="center">{elem}</TableCell>
             {/* <TableCell align="center"><DoneOutlineIcon color="success" /></TableCell> */}
@@ -113,9 +118,11 @@ function CovCohortsIntersection() {
               "None Available"
               </Typography>
               </TableCell>
-            </TableRow>}
+            </TableRow>
+            }
         </TableBody>
-      </Table></div>:(
+      </Table>
+      </div>:(
         <Box
           sx={{
             flexGrow: 1,

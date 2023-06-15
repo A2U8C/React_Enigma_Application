@@ -77,7 +77,7 @@ function SideBarComponent(prop) {
 
       <Accordion.Item eventKey={prop.keyval}>
       <Accordion.Header onClick={invokeCollapse}>{prop.cohortResult}</Accordion.Header>
-      <Accordion.Body>
+      <Accordion.Body  style={{ cursor: "pointer" }}>
       {response.length>0 ? response.map((cohort_projects) => (<CohortProjectLists key={prop.cohortResult} projectsList={cohort_projects} projectName={prop.cohortResult} cohortInfoUpdate={prop.cohortInfoUpdate}/>)) : "No cohort projects"}
         
       </Accordion.Body>

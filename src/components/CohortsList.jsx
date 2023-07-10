@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MuiDrawer from "@mui/material/Drawer";
+
+import Paper from '@mui/material/Paper';
 import styled from "@emotion/styled";
 import {
   Box,
@@ -10,6 +12,9 @@ import {
   ListItemText,
   ListSubheader,
   Tooltip,
+  Container, 
+  TextField,
+
 } from "@mui/material";
 
 // Icons
@@ -30,11 +35,15 @@ const Drawer = styled(MuiDrawer)({
 export default function CohortsList(props) {
   const [availOpen, setAvailOpen] = useState(false);
   const [unavailOpen, setUnavailOpen] = useState(false);
-
   const [cohortAllList, setcohortAllList] = useState([]);
   const [cohortMissingList, setCohortMissingList] = useState([]);
   const [childCohortName, setChildCohortName] = useState("");
   const [selected, setSelected] = useState("");
+
+
+  
+  var [def_cohorts_list, set_def_cohorts_list] = useState([]);
+  var [searched, setSearched] = useState("");
 
   useEffect(
     (cohortnameSetter = props.cohortnameSetter) => {
@@ -48,12 +57,34 @@ export default function CohortsList(props) {
     axios.post(api_body_info['backEndURL']+"cohorts", api_body_info).then((res) => {
       setcohortAllList(res.data.presentCohorts);
       setCohortMissingList(res.data.Missing);
+      set_def_cohorts_list(res.data.presentCohorts)
     });
   }, []);
 
   const handleAvailClick = (text, id) => {
     setChildCohortName(text);
   };
+
+
+  var requestSearch = (searchedVal) => {
+    console.log(searchedVal)//event.target.value
+    setSearched(searchedVal.target.value)
+    var filteredRows = def_cohorts_list.filter((row) => {
+      return row.toLowerCase().includes(searchedVal.target.value.toLowerCase());
+    });
+    setcohortAllList(filteredRows);
+  };
+  
+  var cancelSearch = () => {
+    setSearched("");
+    requestSearch(searched.target.value);
+  };
+
+
+
+
+
+
 
   return (
     <Drawer
@@ -94,6 +125,21 @@ export default function CohortsList(props) {
         </ListItemButton>
 
         <Collapse in={availOpen} timeout="auto" unmountOnExit>
+
+        <center>
+          <TextField  
+          component={Paper} type="search" 
+          id="search" label="Search" 
+          style={{ marginTop: '0.3rem',marginBottom: '0.3rem'  }} 
+          aria-label="simple table"
+          value={searched}
+          onChange={(searchVal) => requestSearch(searchVal)}
+          onCancelSearch={() => cancelSearch()}
+          />
+
+        </center>
+
+
           {cohortAllList.map((text, index) => (
             <Tooltip title={text} enterDelay={700} arrow>
               <Box key={index + "_" + text}>

@@ -88,7 +88,8 @@ function CohortsPage() {
                 }}
               />
               <Box sx={{ flexGrow: 1 }}>
-                {Object.entries(cohortData).map((elem) => (
+                {console.log(Object.keys(cohortData).length)}
+                {(Object.keys(cohortData).length > 0) ? (Object.entries(cohortData).map((elem) => (
                   <Box
                     sx={{
                       display: "flex",
@@ -118,7 +119,10 @@ function CohortsPage() {
                         : elem[1]}
                     </Box>
                   </Box>
-                ))}
+                ))):( <Typography component="div" variant="h6">
+                  No information available, will be adding soon though...
+                </Typography>)}
+                
               </Box>
             </CardContent>
           </Card>

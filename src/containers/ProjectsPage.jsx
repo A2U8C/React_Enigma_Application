@@ -14,9 +14,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 
+import { ArrowUpward, ArrowDownward } from "@mui/icons-material";
 import { Container, TextField } from "@mui/material";
 
 import CohortDetailsModal from "../components/CohortDetailsModal";
+
+
+import { DataGrid } from '@mui/x-data-grid';
+
+
 
 const {api_body_info} = require('../cred_details.js');
 
@@ -27,6 +33,9 @@ function ProjectsPage() {
   var [cohorts_list, set_cohorts_list] = useState([]);
   var [def_cohorts_list, set_def_cohorts_list] = useState([]);
   var [searched, setSearched] = useState("");
+  
+  const [sortBy, setSortBy] = useState('Cohorts');
+  const [sortOrder, setSortOrder] = useState('asc');
 
 
   var ModalOpen = (text) => {
@@ -51,6 +60,8 @@ function ProjectsPage() {
 
 
   var all_keys=Object.keys(response);
+  var tab_wdth=`${60/(all_keys.length-1)}rem`;
+  var font_size='1.2rem';
   var index_all = all_keys.indexOf("all_cohorts");
   var x = all_keys.splice(index_all, 1);
 
@@ -67,6 +78,36 @@ function ProjectsPage() {
     setSearched("");
     requestSearch(searched.target.value);
   };
+  
+  function sort_by_key(ct_sort)
+  {
+      function sortByKey_inc(x, y) {
+          return ((x.toLowerCase() < y.toLowerCase()) ? -1 : ((x.toLowerCase() > y.toLowerCase()) ? 1 : 0));
+          
+      }
+  
+      function sortByKey_dec(x, y) {
+
+          return ((x.toLowerCase() > y.toLowerCase()) ? -1 : ((x.toLowerCase() < y.toLowerCase()) ? 1 : 0));
+          
+      }
+  
+  
+      if (ct_sort=='asc'){
+        set_cohorts_list(cohorts_list.sort(sortByKey_inc));
+      }
+      else{
+        set_cohorts_list(cohorts_list.sort(sortByKey_dec));
+      }
+  }
+
+
+  const handleSort = () => {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+      sort_by_key(sortOrder)
+      // console.log(sortedRows)
+    }
+
 
   
   // console.log(all_keys,typeof all_keys)
@@ -75,9 +116,9 @@ function ProjectsPage() {
 
   return (
 
-
-    <div>
-        <center>
+    
+    <div style={{width:'60rem'}}>
+        {/* <center> */}
           <TextField  
           component={Paper} type="search" 
           id="search" label="Search" 
@@ -88,15 +129,24 @@ function ProjectsPage() {
           onCancelSearch={() => cancelSearch()}
           />
 
-        </center>
+        {/* </center> */}
         
 <TableContainer component={Paper}>
-      <Table style={{ width: '60rem', margin: 'auto' }} aria-label="simple table">
+      <Table style={{ width: '60rem', margin: 'auto'}} aria-label="simple table">
         <TableHead>
           <TableRow>
-          <TableCell></TableCell>
+          <TableCell
+                onClick={() => handleSort()}
+                style={{ cursor: 'pointer', fontWeight: 'bold', fontSize:font_size}}
+              >
+                Cohorts{sortOrder === "asc" ? (
+              <ArrowUpward onClick={handleSort} />
+            ) : (
+              <ArrowDownward onClick={handleSort} />
+            )}
+              </TableCell>
           {all_keys.map((elem) => (
-             elem!="Unknown" ?<TableCell>{elem}</TableCell>:null
+             elem!="Unknown" ?<TableCell style={{ width: tab_wdth, fontSize:font_size}}>{elem}</TableCell>:null
              
           ))}
 
@@ -109,7 +159,7 @@ function ProjectsPage() {
             <TableRow
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
-             <TableCell component="td" scope="row" onClick={() => {
+             <TableCell style={{ fontSize:font_size}} component="td" scope="row" onClick={() => {
                     ModalOpen(elem);
                   }}>{elem}{ModalOpenVar && elem==ModalTextVar && <CohortDetailsModal cohortName={elem}/> }</TableCell>
             {all_keys.map((cohortProj,i) => (
@@ -125,6 +175,10 @@ function ProjectsPage() {
         </TableBody>
       </Table>
     </TableContainer>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
     </div>
 
     
